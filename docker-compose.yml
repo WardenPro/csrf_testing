@@ -1,12 +1,13 @@
 version: '3.8'
 
 services:
-
   vulnerable_web:
     build: ./vulnerable-web
     container_name: vulnerable_web
     ports:
       - "8080:80"
+    volumes:
+      - ./vulnerable-web:/var/www/html
     networks:
       - app_network
 
@@ -15,10 +16,11 @@ services:
     container_name: attacker_web
     ports:
       - "8082:80"
+    volumes:
+      - ./malicious-web:/var/www/html
     networks:
       - app_network
 
-
 networks:
-    app_network:
-      driver: bridge
+  app_network:
+    driver: bridge

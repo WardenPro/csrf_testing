@@ -1,11 +1,40 @@
 <?php
+
+//Without session token put it on cookie;
+// function generateToken() {
+//     return bin2hex(random_bytes(32));
+// }
+
+// // Générer un nouveau token CSRF si le cookie n'existe pas
+// if (!isset($_COOKIE['csrf_token'])) {
+//     $csrf_token = generateToken();
+//     setcookie('csrf_token', $csrf_token, [
+//         'expires' => time() + 3600,
+//         'path' => '/',
+//         'domain' => 'localhost',
+//         'secure' => false, // true si vous utilisez HTTPS
+//         'httponly' => true,
+//         'samesite' => 'Strict', // Ou 'Lax'
+//     ]);
+// } else {
+//     $csrf_token = $_COOKIE['csrf_token'];
+// }
 session_start();
 
-if (empty($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
-
+// Générer un nouveau token CSRF pour chaque requête
+$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 $csrf_token = $_SESSION['csrf_token'];
+
+// Not Working
+// setcookie('csrf_token', $csrf_token, [
+//     'expires' => time() + 3600,
+//     'path' => '/',
+//     'domain' => 'localhost',
+//     'secure' => false,
+//     'httponly' => true,
+//     'samesite' => 'Strict',
+// ]);
+
 ?>
 
 <!DOCTYPE html>
